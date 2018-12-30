@@ -37,23 +37,29 @@ def get_limit_price_trigger(action, limitPrice, useAdjustedValues, bar):
     # If the bar is below the limit price, use the open price.
     # If the bar includes the limit price, use the open price or the limit price.
     if action in [broker.Order.Action.BUY, broker.Order.Action.BUY_TO_COVER]:
-        if high < limitPrice:
-            ret = open_
-        elif limitPrice >= low:
-            if open_ < limitPrice:  # The limit price was penetrated on open.
-                ret = open_
-            else:
-                ret = limitPrice
+        ##Edited by neeraj
+        ### Overwriting the limit order logic. I want to fill at my limit price and not the Open/Close Price.
+        # if high < limitPrice:
+        #     ret = open_
+        # elif limitPrice >= low:
+        #     if open_ < limitPrice:  # The limit price was penetrated on open.
+        #         ret = open_
+        #     else:
+        #         ret = limitPrice
+        ret = limitPrice
     # If the bar is above the limit price, use the open price.
     # If the bar includes the limit price, use the open price or the limit price.
     elif action in [broker.Order.Action.SELL, broker.Order.Action.SELL_SHORT]:
-        if low > limitPrice:
-            ret = open_
-        elif limitPrice <= high:
-            if open_ > limitPrice:  # The limit price was penetrated on open.
-                ret = open_
-            else:
-                ret = limitPrice
+        ###************Edited by neeraj
+        ### Overwriting the limit order logic. I want to fill/Sell at my limit price and not the Open/Close Price.
+        # if low > limitPrice:
+        #     ret = open_
+        # elif limitPrice <= high:
+        #     if open_ > limitPrice:  # The limit price was penetrated on open.
+        #         ret = open_
+        #     else:
+        #         ret = limitPrice
+        ret = limitPrice
     else:  # Unknown action
         assert(False)
     return ret
